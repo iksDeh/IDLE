@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ffab75f76dfb64f9cc51ffe5addc53, type: 3}
+  m_Name: Wooden Helemt
+  m_EditorClassIdentifier: 
+  name: Wooden Helmet
+  craftingData:
+    rows:
+    - row:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
+      - {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+    - row:
+      - {fileID: 0}
+      - {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
+      - {fileID: 0}
+    - row:
+      - {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
+    - row:
+      - {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
+    - row:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+    - row:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+  craftedItem: {fileID: 11400000, guid: 4ba1fef0ff447954b9343e4ff657c0a8, type: 2}
+  isDefaultItem: 0

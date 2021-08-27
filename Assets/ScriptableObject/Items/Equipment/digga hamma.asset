@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05da13e3233553449bd70a47aeb7fa09, type: 3}
+  m_Name: digga hamma
+  m_EditorClassIdentifier: 
+  name: digga hamma
+  icon: {fileID: 21300198, guid: 866f272de28c91d45aa970551cfa6f1f, type: 3}
+  isDefaultItem: 0
+  equipSlot: 9
+  armor: 10
+  damage: 20
+  stammina: 0
+  agility: 0
+  strength: 0
+  intiligenz: 0
+  spirit: 0
