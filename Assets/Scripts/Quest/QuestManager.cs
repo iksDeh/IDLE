@@ -81,7 +81,6 @@ public class QuestManager : MonoBehaviour
         }
 
         quest.Add(lQuest);
-        // questGoal.Add(lQuest.questGoal);
         questGiver.Add(lQuestGiver);
 
         if (questGiverQuest.ContainsKey(lQuestGiver))
