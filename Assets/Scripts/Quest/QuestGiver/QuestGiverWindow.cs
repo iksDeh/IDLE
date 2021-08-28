@@ -24,7 +24,7 @@ public class QuestGiverWindow : MonoBehaviour
 
         quests = new Dictionary<Quest, GameObject>();
 
-        for (int i = 0; i < questGiver.quest.Length; i++)
+        for (int i = 0; i < questGiver.quest.Count; i++)
         {
             if (questParent.GetComponentInChildren<Transform>().name != questGiver.quest[i].questName)
             {
