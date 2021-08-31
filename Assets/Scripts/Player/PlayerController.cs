@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-
         if (movement != new Vector2(0, 0))
         {
             float newMovementSpeed = movementSpeed;
@@ -89,17 +88,12 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isWalking", false);
             animator.SetBool("isRunning", false);
         }
-
     }
 
     public void EnemyKilled(List<int> questIds)
     {
             if (questIds.Count > 0)
             QuestManager.instance.UpdateQuest(questIds);
-
-    //    quest.questGoal.EnemyKilled(enemy);
-
-
     }
 
     public void OnMove(InputAction.CallbackContext context)

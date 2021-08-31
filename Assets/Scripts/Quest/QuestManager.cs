@@ -16,23 +16,6 @@ public class QuestManager : MonoBehaviour
     }
 
     #endregion
-    public class QuestGiverQuest
-    {
-        public QuestGiver questGiver;
-        public List<Quest> quests;
-        public QuestGiverQuest(QuestGiver questgiver, Quest quest)
-        {
-            questGiver = questgiver;
-            quests = new List<Quest>();
-            quests.Add(quest);
-
-        }
-
-        public void AddQuestToQuestGiver(Quest quest)
-        {
-            quests.Add(quest);
-        }
-    }
 
     public delegate void OnQuestLogChanged(Quest quest);
     public OnQuestLogChanged onQuestLogChanged;
@@ -44,31 +27,32 @@ public class QuestManager : MonoBehaviour
     public OnQuestTurnedIn onQuestTurnedIn;
     public event System.Action OnQuestAbdoned;
 
-    Dictionary<QuestGiver, QuestGiverQuest> questGiverQuest;
-    List<Quest> quest;
-    List<QuestGiver> questGiver;
 
+    public Sprite isAvilableIcon;
+    public Sprite isNotAvilableIcon;
+    public Sprite isActivIcon;
+    public Sprite isCompletedIcon;
+
+    QuestGiversQuests qgq;
+    public Dictionary<QuestGiver, List<Quest>> activQuestGiverQuests { get; private set; }
+    public Dictionary<QuestGiver, List<Quest>> completedQuestGiverQuests { get; private set; }
     public QuestLogWindow qlog;
     int questGoalCounter = 1;
 
     void Start()
     {
-        questGiverQuest = new Dictionary<QuestGiver, QuestGiverQuest>();
-        quest = new List<Quest>();
-        //questGoal = new List<QuestGoal>();
-        questGiver = new List<QuestGiver>();
+        qgq = new QuestGiversQuests();
         qlog.Init();
-        //questGiverQuests = new Dictionary<QuestGiver, List<Quest>>();
     }
 
-    public Dictionary<QuestGiver, QuestGiverQuest> GetQuestGiverQuests()
+    public Dictionary<QuestGiver, List<Quest>> GetQuestGiverQuests()
     {
-        return questGiverQuest;
+        return qgq.activQuestGiverQuests;
     }
 
     public List<QuestGiver> GetQuestGivers()
     {
-        return questGiver;
+        return qgq.GetQuestGivers();
     }
 
     public void AddQuest(Quest lQuest, QuestGiver lQuestGiver)
@@ -80,19 +64,9 @@ public class QuestManager : MonoBehaviour
             questGoalCounter++;
         }
 
-        quest.Add(lQuest);
-        questGiver.Add(lQuestGiver);
+        qgq.AddQuestToQuestGiver(lQuestGiver, lQuest);
 
-        if (questGiverQuest.ContainsKey(lQuestGiver))
-        {
-            questGiverQuest[lQuestGiver].AddQuestToQuestGiver(lQuest);
-        }
-        else
-        {
-            questGiverQuest.Add(lQuestGiver, new QuestGiverQuest(lQuestGiver, lQuest));
-        }
-
-        if (onQuestAccepted != null)
+            if (onQuestAccepted != null)
             onQuestAccepted.Invoke(lQuest);
         if (onQuestLogChanged != null)
             onQuestLogChanged.Invoke(lQuest);
@@ -107,15 +81,20 @@ public class QuestManager : MonoBehaviour
 
         }
 
-        lquestGiver.RemoveQuest(lQuest);
-        quest.Remove(lQuest);
+
 
         //   questGoal.Remove(lQuest.questGoal);
         questGiver.Remove(lquestGiver);
 
         if (lQuest.GetQuestStatus() == QuestStatus.turnedIn)
+        {
+
+                    lquestGiver.RemoveQuest(lQuest);
+        quest.Remove(lQuest);
             if (onQuestTurnedIn != null)
                 onQuestTurnedIn.Invoke(lQuest);
+        }
+
         if (lQuest.GetQuestStatus() == QuestStatus.abdoned)
             if (OnQuestAbdoned != null)
                 OnQuestAbdoned();
@@ -126,8 +105,8 @@ public class QuestManager : MonoBehaviour
 
     public void UpdateQuest(List<int> questIDs)
     {
-        foreach (QuestGiver qg in questGiverQuest.Keys)
-            foreach (Quest q in questGiverQuest[qg].quests)
+        foreach (QuestGiver qg in activQuestGiverQuests.Keys)
+            foreach (Quest q in activQuestGiverQuests[qg])
             {
                 q.EnemyKilled(questIDs);
                 if(q.questGoal.goalCompleted)
@@ -139,27 +118,6 @@ public class QuestManager : MonoBehaviour
                         onQuestLogChanged.Invoke(q);
                 }
             }
-
-
-        //foreach (Quest q in quest)
-        //    foreach (QuestGoal.Kill obj in q.questGoal.killGoal)
-        //    {
-        //        foreach (int i in enemy.questIDs)
-        //            if (obj.id == i)
-        //            {
-        //                obj.currenAmount++;
-        //                if (obj == obj)
-        //                {
-        //                    if (onQuestCompleted != null)
-        //                        onQuestCompleted.Invoke(q);
-        //                    if (onQuestLogChanged != null)
-        //                        onQuestLogChanged.Invoke(q);
-        //                }
-        //                Debug.Log("Updated Questlog");
-        //                return;
-        //            }
-        //    }
-
     }
 
     public void QuestCompleted(Quest lQuest, QuestGiver lquestGiver)
@@ -168,5 +126,50 @@ public class QuestManager : MonoBehaviour
             onQuestLogChanged.Invoke(lQuest);
 
         Debug.Log("Quest Completed go back to QuestGiver");
+    }
+
+
+
+    private class QuestGiversQuests
+    {
+        public Dictionary<QuestGiver, List<Quest>> activQuestGiverQuests;
+        public Dictionary<QuestGiver, List<Quest>> completedQuestGiverQuests;
+
+        public QuestGiversQuests()
+        {
+            activQuestGiverQuests = new Dictionary<QuestGiver, List<Quest>>();
+            completedQuestGiverQuests = new Dictionary<QuestGiver, List<Quest>>();
+        }
+
+        public void SetQuestCompleted(QuestGiver qg, Quest q)
+        {
+            activQuestGiverQuests[qg].Remove(q);
+            if (completedQuestGiverQuests.ContainsKey(qg))
+                completedQuestGiverQuests[qg].Add(q);
+            else
+            {
+                List<Quest> quests = new List<Quest>();
+                quests.Add(q);
+                completedQuestGiverQuests.Add(qg, quests);
+            }
+        }
+        public List<QuestGiver> GetQuestGivers()
+        {
+            List<QuestGiver> qgs = new List<QuestGiver>();
+            foreach (QuestGiver qg in activQuestGiverQuests.Keys)
+                qgs.Add(qg);
+            return qgs;
+        }
+        public void AddQuestToQuestGiver(QuestGiver qg, Quest q)
+        {
+            if (activQuestGiverQuests.ContainsKey(qg))
+                activQuestGiverQuests[qg].Add(q);
+            else
+            {
+                List<Quest> quests = new List<Quest>();
+                quests.Add(q);
+                activQuestGiverQuests.Add(qg, quests);
+            }
+        }
     }
 }

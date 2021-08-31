@@ -57,7 +57,7 @@ public class QuestLogWindow : MonoBehaviour
         quests = new Dictionary<Quest, GameObject>();
         //movement = context.ReadValue<Vector2>();
         foreach (QuestGiver qg in qm.GetQuestGiverQuests().Keys)
-            foreach (Quest q in qm.GetQuestGiverQuests()[qg].quests)
+            foreach (Quest q in qm.GetQuestGiverQuests()[qg])
             {
                 GameObject questObj = new GameObject(q.questName);
                 questObj = Instantiate(questListWindow.gameObject, new Vector3(0, 0, 0), Quaternion.identity);

@@ -28,6 +28,7 @@ public class QuestGiverUI : MonoBehaviour
         questGiver = this.GetComponent<QuestGiver>();
         foreach (Quest q in questGiver.quest)
         {
+            if(q.questConditions.lvlRequired <= PlayerController.instance.stats.level.GetValue())
             if (q.GetQuestStatus() == QuestStatus.completed)
             {
                 questStatus.sprite = questGiver.isCompleted;
