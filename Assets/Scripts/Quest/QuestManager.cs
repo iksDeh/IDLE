@@ -84,13 +84,13 @@ public class QuestManager : MonoBehaviour
 
 
         //   questGoal.Remove(lQuest.questGoal);
-        questGiver.Remove(lquestGiver);
+        //questGiver.Remove(lquestGiver);
 
         if (lQuest.GetQuestStatus() == QuestStatus.turnedIn)
         {
 
                     lquestGiver.RemoveQuest(lQuest);
-        quest.Remove(lQuest);
+       // quest.Remove(lQuest);
             if (onQuestTurnedIn != null)
                 onQuestTurnedIn.Invoke(lQuest);
         }
