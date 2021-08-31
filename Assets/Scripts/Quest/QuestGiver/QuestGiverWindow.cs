@@ -14,6 +14,7 @@ public class QuestGiverWindow : MonoBehaviour
     {
         QuestManager.instance.onQuestLogChanged += UpdateUI;
         QuestManager.instance.onQuestTurnedIn += QuestTurnedIn;
+        //asdasd
     }
 
     public void Init(QuestGiver questGiver)
