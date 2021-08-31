@@ -12,6 +12,7 @@ public class CharackterStats : MonoBehaviour
     public Stat strength;
     public Stat inttiligenz;
     public Stat spirit;
+    public Stat level;
 
     public event System.Action OnDamageTaken;
 

@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer[] sr;
 
     public Quest quest;
-
+    public PlayerStats stats;
     public float movementSpeed = 5f;
 
     private Vector2 movement;
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
+        stats = GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame

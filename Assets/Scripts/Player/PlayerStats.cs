@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class PlayerStats : CharackterStats
 {
+    public int lvlUpXpMultiplier = 10;
+    public int lvlUpXpNeededMultiplier = 100;
+
     public int stamminaHealthMultipli = 10;
+
+
+    double xpNeeded = 0;
+    double xpCurrent = 0;
     void Start()
     {
         EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
+        xpNeeded = level.GetValue() * lvlUpXpNeededMultiplier;
     }
 
     void OnEquipmentChanged(Equipment newItem, Equipment oldItem)
@@ -38,6 +46,18 @@ public class PlayerStats : CharackterStats
 
         }
     }
+
+    public void OnKill(EnemyStats enemy)
+    {
+        
+        xpCurrent += Mathf.Sqrt((enemy.level.GetValue() * lvlUpXpMultiplier));
+        if (xpCurrent >= xpNeeded)
+        {
+            level.AddModifier(1);
+            xpNeeded += Mathf.Sqrt((level.GetValue() * lvlUpXpNeededMultiplier));
+        }
+    }
+
     public override void Die()
     {
         base.Die();
