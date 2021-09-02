@@ -19,32 +19,46 @@ public class QuestGiverUI : MonoBehaviour
     private bool isAvilable = false;
     private bool isCompleted = false;
     private bool isActiv = false;
-    private bool notAvilable = false;
+    private bool isNotAvilable = false;
     void Start()
     {
         quests = new List<Quest>();
         QuestManager.instance.onQuestLogChanged += UpdateUI;
+        QuestManager.instance.onQuestTurnedIn += TurnedIn;
 
         questGiver = this.GetComponent<QuestGiver>();
         foreach (Quest q in questGiver.quest)
         {
-            if(q.questConditions.lvlRequired <= PlayerController.instance.stats.level.GetValue())
+            ///  if(q.questConditions.lvlRequired <= PlayerController.instance.stats.level.GetValue())
             if (q.GetQuestStatus() == QuestStatus.completed)
             {
-                questStatus.sprite = questGiver.isCompleted;
+                questStatus.sprite = q.questStatusIcon;
                 isCompleted = true;
                 return;
             }
             else if (q.GetQuestStatus() == QuestStatus.available)
             {
-                questStatus.sprite = questGiver.isAvilable;
+                questStatus.sprite = q.questStatusIcon;
                 isAvilable = true;
             }
+
             else if (q.GetQuestStatus() == QuestStatus.activ && isAvilable == false)
             {
-                questStatus.sprite = questGiver.isActiv;
+                questStatus.sprite = q.questStatusIcon;
                 isActiv = true;
             }
+
+            else if (q.GetQuestStatus() == QuestStatus.activ && isAvilable == false && isActiv == false)
+            {
+                questStatus.sprite = q.questStatusIcon;
+                isNotAvilable = true;
+            }
+
+            else if (q.GetQuestStatus() == QuestStatus.turnedIn && isAvilable == false && isActiv == false && isNotAvilable == false)
+            {
+                questStatus.sprite = q.questStatusIcon;
+            }
+
 
             quests.Add(q);
         }
@@ -53,37 +67,58 @@ public class QuestGiverUI : MonoBehaviour
 
     }
 
+    public void TurnedIn(Quest q)
+    {
+        quests.Remove(q);
+    }
+
     public void UpdateUI(Quest quest)
     {
-        isAvilable = false;
-        isCompleted = false;
-        isActiv = false;
-        notAvilable = false;
+        if(quests.Count > 0)
+        {
+            isAvilable = false;
+            isCompleted = false;
+            isActiv = false;
+            isNotAvilable = false;
 
-        foreach(Quest q in quests)
-            if (q.GetQuestStatus() == QuestStatus.completed)
-            {
-                questStatus.sprite = questGiver.isCompleted;
-                isCompleted = true;
-                return;
-            }
-            else if (q.GetQuestStatus() == QuestStatus.available)
-            {
-                isAvilable = true;
-            }
-            else if (q.GetQuestStatus() == QuestStatus.activ )
-            {
-                isActiv = true;
-            }
-            
-        if(quest.GetQuestStatus() == QuestStatus.completed)
-            questStatus.sprite = questGiver.isCompleted;
-        else if (quest.GetQuestStatus() == QuestStatus.available && !isCompleted)
-            questStatus.sprite = questGiver.isAvilable;
-        else if (quest.GetQuestStatus() == QuestStatus.activ && !isCompleted && !isAvilable)
-            questStatus.sprite = questGiver.isActiv;
-        else if (quest.GetQuestStatus() == QuestStatus.activ && !isCompleted && !isAvilable && !isActiv)
-            questStatus.sprite = questGiver.notAvilable;
+            foreach (Quest q in quests)
+                if (q.GetQuestStatus() == QuestStatus.completed)
+                {
+                    questStatus.sprite = q.questStatusIcon;
+                    isCompleted = true;
+                    return;
+                }
+                else if (q.GetQuestStatus() == QuestStatus.available)
+                {
+                    questStatus.sprite = q.questStatusIcon;
+                    isAvilable = true;
+                }
+
+                else if (q.GetQuestStatus() == QuestStatus.activ && isAvilable == false)
+                {
+                    questStatus.sprite = q.questStatusIcon;
+                    isActiv = true;
+                }
+
+                else if (q.GetQuestStatus() == QuestStatus.activ && isAvilable == false && isActiv == false)
+                {
+                    questStatus.sprite = q.questStatusIcon;
+                    isNotAvilable = true;
+                }
+
+                else if (q.GetQuestStatus() == QuestStatus.turnedIn && isAvilable == false && isActiv == false && isNotAvilable == false)
+                {
+                    questStatus.sprite = q.questStatusIcon;
+                    //quests.Remove(q);
+                }
+        }
+        else
+        {
+            questStatus.sprite = quest.questStatusIcon;
+        }
+        
+
+
     }
 
     public void OpenQuestWindow()

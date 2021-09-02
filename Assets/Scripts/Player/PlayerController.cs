@@ -90,10 +90,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void EnemyKilled(List<int> questIds)
+    public void EnemyKilled(Enemy enemy)
     {
-            if (questIds.Count > 0)
-            QuestManager.instance.UpdateQuest(questIds);
+            if (enemy != null)
+            QuestManager.instance.UpdateQuest(enemy);
     }
 
     public void OnMove(InputAction.CallbackContext context)

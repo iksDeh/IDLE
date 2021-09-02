@@ -61,8 +61,7 @@ public class QuestWindow : MonoBehaviour
 
     public void AcceptQuest()
     {
-        q.SetQuestStatus(QuestStatus.activ);
-        QuestManager.instance.AddQuest(q, qg);
+        QuestManager.instance.SetQuestActiv(q, qg);
         rewards.RemoveAllRewards();
 
         this.gameObject.SetActive(false);
@@ -70,10 +69,8 @@ public class QuestWindow : MonoBehaviour
 
     public void CompleteQuest()
     {
-        q.SetQuestStatus(QuestStatus.turnedIn);
-        QuestManager.instance.RemoveQuest(q, qg);
-        Inventory.instance.Add(q.questRewards.itemRewards);
-        Inventory.instance.AddMoney(q.questRewards.currencyRewards);
+        QuestManager.instance.TurnInQuest(q, qg);
+
         rewards.RemoveAllRewards();
         this.gameObject.SetActive(false);
     }

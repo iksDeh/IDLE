@@ -10,19 +10,19 @@ public class QuestGiver : Interactable
 
     private PlayerController player;
 
-    public Sprite isAvilable;
-    public Sprite isActiv;
-    public Sprite isCompleted;
-    public Sprite notAvilable;
-
     public bool onQuestGiverInteract { get; private set; } = false;
     private void Start()
     {
         player = PlayerController.instance;
         //QuestManager.instance.OnQuestCompleted += CompletedQuest;
 
+
         for (int i = 0; i < quest.Count; i++)
-            quest[i].Init();
+        {
+            QuestManager.instance.AddQuest(quest[i], this);
+            quest[i].Init(this);
+        }
+
     }
 
     public void RemoveQuest(Quest quest)

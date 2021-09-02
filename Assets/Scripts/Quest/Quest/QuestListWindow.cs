@@ -18,7 +18,7 @@ public class QuestListWindow : MonoBehaviour
     {
         clickableObject = this.GetComponent<ClickableObject>();
         clickableObject.onLeftClick += OpenQuestWindow;
-
+        //QuestManager.instance.onQuestLogChanged += UpdateStatus;
     }
 
     public void OpenQuestWindow(PointerEventData eventData)
@@ -37,47 +37,18 @@ public class QuestListWindow : MonoBehaviour
         this.questGiver = questGiver;
         quest = newQuest;
         questName.text = quest.questName;
-        
-        
-        if (newQuest.GetQuestStatus() == QuestStatus.available)
-        {
-            questStatusIcon.sprite = questGiver.isAvilable;
-        }
-        else if(newQuest.GetQuestStatus() == QuestStatus.notAvailable)
-        {
-            questStatusIcon.sprite = questGiver.notAvilable;
-        }
-        else if (newQuest.GetQuestStatus() == QuestStatus.activ)
-        {
-            questStatusIcon.sprite = questGiver.isActiv;
-        }
-        else if (newQuest.GetQuestStatus() == QuestStatus.completed)
-        {
-            questStatusIcon.sprite = questGiver.isCompleted;
-        }
+
+            questStatusIcon.sprite = newQuest.questStatusIcon;
+
 
         //quest goal sybole einfügen
-        questGoalIcon.sprite = questGiver.isCompleted;
+        questGoalIcon.sprite = newQuest.questStatusIcon;
 
     }
 
     public void UpdateStatus(Quest q)
     {
-        if (q.GetQuestStatus() == QuestStatus.available)
-        {
-            questStatusIcon.sprite = questGiver.isAvilable;
-        }
-        else if (q.GetQuestStatus() == QuestStatus.notAvailable)
-        {
-            questStatusIcon.sprite = questGiver.notAvilable;
-        }
-        else if (q.GetQuestStatus() == QuestStatus.activ)
-        {
-            questStatusIcon.sprite = questGiver.isActiv;
-        }
-        else if (q.GetQuestStatus() == QuestStatus.completed)
-        {
-            questStatusIcon.sprite = questGiver.isCompleted;
-        }
+        if (this != null)
+            questStatusIcon.sprite = q.questStatusIcon;
     }
 }

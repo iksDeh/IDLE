@@ -47,7 +47,7 @@ public class QuestGoal
 
     [HideInInspector] public bool goalCompleted = false;
 
-    public void EnemyKilled(List<int> questIDs)
+    public void EnemyKilled(Enemy enemy)
     {
         if (killGoal.Count == 0)
             killGoalIsReached = true;
@@ -56,15 +56,11 @@ public class QuestGoal
         if (gatherGoal.Count == 0)
             gatherGoalIsReached = true;
 
-        foreach(Kill goal in killGoal)
-            Debug.Log(goal.currenAmount);
-        foreach (int i in questIDs)
-        {
             if(killGoal.Count != 0)
             foreach (Kill goal in killGoal)
             {
                     Debug.Log(goal.currenAmount);
-                if (goal.id == i)
+                if (goal.enemy.name == enemy.name)
                    goal.currenAmount++;
                 if (goal.currenAmount >= goal.reqiredAmount)
                     killGoalIsReached = true;
@@ -75,7 +71,7 @@ public class QuestGoal
                 // if (goal.enemy.id == enemy.id)
                 // Drop QuestItem (random) 
             }
-        }
+        
 
         if (killGoalIsReached && lootGoalIsReached && gatherGoalIsReached)
             goalCompleted = true;

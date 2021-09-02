@@ -11,17 +11,6 @@ public class QuestLogWindow : MonoBehaviour
     private QuestManager qm;
     private Dictionary<Quest, GameObject> quests;
 
-
-    //void Start()
-    //{
-    //    if (qm == null)
-    //    {
-    //        qm = QuestManager.instance;
-    //        qm.onQuestLogChanged += UpdateUI;
-    //        qm.onQuestAccepted += AddQuest;
-    //    }
-    //}
-
     public void Init()
     {
         if(qm == null)
@@ -35,13 +24,7 @@ public class QuestLogWindow : MonoBehaviour
 
     public void UpdateUI(Quest quest)
     {
-        foreach (Quest q in quests.Keys)
-        {
-            if (quest == q)
-                if(quest.GetQuestStatus() != QuestStatus.turnedIn && quest.GetQuestStatus() != QuestStatus.abdoned)
-                    quests[q].GetComponent<QuestListWindow>().UpdateStatus(quest);
-
-        }
+        quests[quest].GetComponent<QuestListWindow>().UpdateStatus(quest);
     }
 
     public void RemoveQuest(Quest quest)
@@ -55,9 +38,9 @@ public class QuestLogWindow : MonoBehaviour
             foreach (Quest q in quests.Keys)
                 Destroy(quests[q]);
         quests = new Dictionary<Quest, GameObject>();
-        //movement = context.ReadValue<Vector2>();
-        foreach (QuestGiver qg in qm.GetQuestGiverQuests().Keys)
-            foreach (Quest q in qm.GetQuestGiverQuests()[qg])
+
+        foreach (QuestGiver qg in qm.activQuestGiverQuests.Keys)
+            foreach (Quest q in qm.activQuestGiverQuests[qg])
             {
                 GameObject questObj = new GameObject(q.questName);
                 questObj = Instantiate(questListWindow.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
@@ -65,7 +48,6 @@ public class QuestLogWindow : MonoBehaviour
                 questObj.transform.localScale = new Vector3(1, 1, 1);
                 questObj.name = q.questName;
                 questObj.SetActive(true);
-                //quests.Add(questObj);
 
                 questObj.GetComponent<QuestListWindow>().AddQuest(q, qg);
 
@@ -75,7 +57,6 @@ public class QuestLogWindow : MonoBehaviour
     }
     public void OnQuestLogOpen(InputAction.CallbackContext context)
     {
-
             this.gameObject.SetActive(!this.gameObject.activeSelf);
     }
 

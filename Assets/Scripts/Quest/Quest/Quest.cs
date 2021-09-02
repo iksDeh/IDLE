@@ -26,13 +26,16 @@ public class Quest : ScriptableObject
     public QuestGoal questGoal;
     public QuestRewards questRewards;
     public QuestCondition questConditions;
-
+    [HideInInspector] public Sprite questStatusIcon;
     private QuestStatus questStatus;
+    [HideInInspector] public QuestGiver questGiver;
 
-    public void EnemyKilled(List<int> questIDs)
+    public void EnemyKilled(Enemy enemy)
     {
-        questGoal.EnemyKilled(questIDs);
+        questGoal.EnemyKilled(enemy);
     }
+
+
 
     public void SetQuestStatus(QuestStatus status)
     {
@@ -43,9 +46,10 @@ public class Quest : ScriptableObject
     {
         return questStatus;
     }
-    public void Init()
+    public void Init(QuestGiver qgiver)
     {
-        questStatus = QuestStatus.available;
+        questGiver = qgiver;
+      //  questStatus = QuestStatus.available;
 
         string overrideName = "";
 

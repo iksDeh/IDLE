@@ -28,144 +28,146 @@ public class QuestManager : MonoBehaviour
     public delegate void OnQuestAbdoned(Quest quest);
     public OnQuestAbdoned onQuestAbdoned;
 
-
-
     [SerializeField] private Sprite isAvilableIcon;
     [SerializeField] private Sprite isNotAvilableIcon;
     [SerializeField] private Sprite isActivIcon;
     [SerializeField] private Sprite isCompletedIcon;
     [HideInInspector] public Sprite statusIcon;
 
-    QuestGiversQuests qgq;
     public Dictionary<QuestGiver, List<Quest>> activQuestGiverQuests { get; private set; }
     public Dictionary<QuestGiver, List<Quest>> completedQuestGiverQuests { get; private set; }
     public Dictionary<QuestGiver,List<Quest>> notAvilableQuestGiverQuest { get; private set; }
+    public Dictionary<QuestGiver, List<Quest>> avilableQuestGiverQuest { get; private set; }
 
     public QuestLogWindow qlog;
     int questGoalCounter = 1;
 
     void Start()
     {
-        qgq = new QuestGiversQuests();
         qlog.Init();
-    }
 
-    public Dictionary<QuestGiver, List<Quest>> GetQuestGiverQuests()
-    {
-        return qgq.activQuestGiverQuests;
-    }
-
-    public List<QuestGiver> GetQuestGivers()
-    {
-        return qgq.GetQuestGivers();
+        activQuestGiverQuests = new Dictionary<QuestGiver, List<Quest>>();
+        completedQuestGiverQuests = new Dictionary<QuestGiver, List<Quest>>();
+        notAvilableQuestGiverQuest = new Dictionary<QuestGiver, List<Quest>>();
+        avilableQuestGiverQuest = new Dictionary<QuestGiver, List<Quest>>();
     }
 
     public void AddQuest(Quest lQuest, QuestGiver lQuestGiver)
     {
-        foreach (QuestGoal.Kill obj in lQuest.questGoal.killGoal)
+        if (avilableQuestGiverQuest.ContainsKey(lQuestGiver))
+            avilableQuestGiverQuest[lQuestGiver].Add(lQuest);
+        else
         {
-            obj.id = questGoalCounter;
-            EnemyManager.instance.SetQuestEnemy(obj.enemy, obj.id);
-            questGoalCounter++;
+            List<Quest> quests = new List<Quest>();
+            quests.Add(lQuest);
+            avilableQuestGiverQuest.Add(lQuestGiver, quests);
         }
 
-        qgq.AddQuestToQuestGiver(lQuestGiver, lQuest);
+        lQuest.SetQuestStatus(QuestStatus.available);
+        lQuest.questStatusIcon = isAvilableIcon;
+    }
 
-            if (onQuestAccepted != null)
+    //Add Quest to Dictonary
+    //Set QuestStaus & QuestIcon
+    //Call AcceptEvent
+    //Call UpdateEvent
+    public void SetQuestActiv(Quest lQuest, QuestGiver lQuestGiver)
+    {
+        avilableQuestGiverQuest[lQuestGiver].Remove(lQuest);
+        if (avilableQuestGiverQuest[lQuestGiver].Count <= 0)
+            avilableQuestGiverQuest.Remove(lQuestGiver);
+
+        if (activQuestGiverQuests.ContainsKey(lQuestGiver))
+            activQuestGiverQuests[lQuestGiver].Add(lQuest);
+        else
+        {
+            List<Quest> quests = new List<Quest>();
+            quests.Add(lQuest);
+            activQuestGiverQuests.Add(lQuestGiver, quests);
+        }
+
+        lQuest.SetQuestStatus(QuestStatus.activ);
+        lQuest.questStatusIcon = isActivIcon;
+
+        if (onQuestAccepted != null)
             onQuestAccepted.Invoke(lQuest);
         if (onQuestLogChanged != null)
             onQuestLogChanged.Invoke(lQuest);
     }
-
-    public void RemoveQuest(Quest lQuest, QuestGiver lquestGiver)
+    public void AbdoneQuest(Quest lQuest, QuestGiver lQuestGiver)
     {
-        //aus Dictonary löschen fehölt !!! 
-        foreach (QuestGoal.Kill obj in lQuest.questGoal.killGoal)
+        activQuestGiverQuests[lQuestGiver].Remove(lQuest);
+        if (activQuestGiverQuests[lQuestGiver].Count <= 0)
+            activQuestGiverQuests.Remove(lQuestGiver);
+        if (avilableQuestGiverQuest.ContainsKey(lQuestGiver))
+            avilableQuestGiverQuest[lQuestGiver].Add(lQuest);
+        else
         {
-            EnemyManager.instance.SetQuestEnemy(obj.enemy, obj.id);
+            List<Quest> quests = new List<Quest>();
+            quests.Add(lQuest);
+            avilableQuestGiverQuest.Add(lQuestGiver, quests);
         }
 
-        if (lQuest.GetQuestStatus() == QuestStatus.turnedIn)
-        {
+        lQuest.SetQuestStatus(QuestStatus.abdoned);
+        lQuest.questStatusIcon = isAvilableIcon;
 
-            lquestGiver.RemoveQuest(lQuest);
-            if (onQuestTurnedIn != null)
-                onQuestTurnedIn.Invoke(lQuest);
-        }
-
-        if (lQuest.GetQuestStatus() == QuestStatus.abdoned)
-            if (onQuestAbdoned != null)
-                onQuestAbdoned.Invoke(lQuest);
+        if (onQuestAbdoned != null)
+            onQuestAbdoned.Invoke(lQuest);
 
         if (onQuestLogChanged != null)
             onQuestLogChanged.Invoke(lQuest);
     }
 
-    public void UpdateQuest(List<int> questIDs)
+    public void TurnInQuest(Quest lQuest, QuestGiver lQuestGiver)
+    {
+        activQuestGiverQuests[lQuestGiver].Remove(lQuest);
+        if (activQuestGiverQuests[lQuestGiver].Count <= 0)
+            activQuestGiverQuests.Remove(lQuestGiver);
+
+        if (completedQuestGiverQuests.ContainsKey(lQuestGiver))
+            completedQuestGiverQuests[lQuestGiver].Add(lQuest);
+        else
+        {
+            List<Quest> quests = new List<Quest>();
+            quests.Add(lQuest);
+            completedQuestGiverQuests.Add(lQuestGiver, quests);
+        }
+
+        lQuest.SetQuestStatus(QuestStatus.turnedIn);
+        lQuest.questStatusIcon = null;
+
+        Inventory.instance.Add(lQuest.questRewards.itemRewards);
+        Inventory.instance.AddMoney(lQuest.questRewards.currencyRewards);
+
+        if (onQuestTurnedIn != null)
+            onQuestTurnedIn.Invoke(lQuest);
+
+        if (onQuestLogChanged != null)
+            onQuestLogChanged.Invoke(lQuest);
+    }
+
+    public void CompletedQuest(Quest lQuest, QuestGiver lQuestGiver)
+    {
+        lQuest.SetQuestStatus(QuestStatus.completed);
+        lQuest.questStatusIcon = isCompletedIcon;
+
+        if (onQuestCompleted != null)
+            onQuestCompleted.Invoke(lQuest);
+
+        if (onQuestLogChanged != null)
+            onQuestLogChanged.Invoke(lQuest);
+    }
+
+    public void UpdateQuest(Enemy enemy)
     {
         foreach (QuestGiver qg in activQuestGiverQuests.Keys)
             foreach (Quest q in activQuestGiverQuests[qg])
             {
-                q.EnemyKilled(questIDs);
+               q.EnemyKilled(enemy);
                 if(q.questGoal.goalCompleted)
                 {
-                    q.SetQuestStatus(QuestStatus.completed);
-                    if (onQuestCompleted != null)
-                        onQuestCompleted.Invoke(q);
-                    if (onQuestLogChanged != null)
-                        onQuestLogChanged.Invoke(q);
+                    CompletedQuest(q, qg);
                 }
             }
-    }
-
-    public void QuestCompleted(Quest lQuest, QuestGiver lquestGiver)
-    {
-        if (onQuestLogChanged != null)
-            onQuestLogChanged.Invoke(lQuest);
-
-        Debug.Log("Quest Completed go back to QuestGiver");
-    }
-
-    private class QuestGiversQuests
-    {
-        public Dictionary<QuestGiver, List<Quest>> activQuestGiverQuests;
-        public Dictionary<QuestGiver, List<Quest>> completedQuestGiverQuests;
-
-        public QuestGiversQuests()
-        {
-            activQuestGiverQuests = new Dictionary<QuestGiver, List<Quest>>();
-            completedQuestGiverQuests = new Dictionary<QuestGiver, List<Quest>>();
-        }
-
-        public void SetQuestCompleted(QuestGiver qg, Quest q)
-        {
-            activQuestGiverQuests[qg].Remove(q);
-            if (completedQuestGiverQuests.ContainsKey(qg))
-                completedQuestGiverQuests[qg].Add(q);
-            else
-            {
-                List<Quest> quests = new List<Quest>();
-                quests.Add(q);
-                completedQuestGiverQuests.Add(qg, quests);
-            }
-        }
-        public List<QuestGiver> GetQuestGivers()
-        {
-            List<QuestGiver> qgs = new List<QuestGiver>();
-            foreach (QuestGiver qg in activQuestGiverQuests.Keys)
-                qgs.Add(qg);
-            return qgs;
-        }
-        public void AddQuestToQuestGiver(QuestGiver qg, Quest q)
-        {
-            if (activQuestGiverQuests.ContainsKey(qg))
-                activQuestGiverQuests[qg].Add(q);
-            else
-            {
-                List<Quest> quests = new List<Quest>();
-                quests.Add(q);
-                activQuestGiverQuests.Add(qg, quests);
-            }
-        }
     }
 }
