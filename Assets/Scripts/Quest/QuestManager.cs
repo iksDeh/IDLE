@@ -25,17 +25,22 @@ public class QuestManager : MonoBehaviour
     public OnQuestAccepted onQuestAccepted;
     public delegate void OnQuestTurnedIn(Quest quest);
     public OnQuestTurnedIn onQuestTurnedIn;
-    public event System.Action OnQuestAbdoned;
+    public delegate void OnQuestAbdoned(Quest quest);
+    public OnQuestAbdoned onQuestAbdoned;
 
 
-    public Sprite isAvilableIcon;
-    public Sprite isNotAvilableIcon;
-    public Sprite isActivIcon;
-    public Sprite isCompletedIcon;
+
+    [SerializeField] private Sprite isAvilableIcon;
+    [SerializeField] private Sprite isNotAvilableIcon;
+    [SerializeField] private Sprite isActivIcon;
+    [SerializeField] private Sprite isCompletedIcon;
+    [HideInInspector] public Sprite statusIcon;
 
     QuestGiversQuests qgq;
     public Dictionary<QuestGiver, List<Quest>> activQuestGiverQuests { get; private set; }
     public Dictionary<QuestGiver, List<Quest>> completedQuestGiverQuests { get; private set; }
+    public Dictionary<QuestGiver,List<Quest>> notAvilableQuestGiverQuest { get; private set; }
+
     public QuestLogWindow qlog;
     int questGoalCounter = 1;
 
@@ -78,26 +83,19 @@ public class QuestManager : MonoBehaviour
         foreach (QuestGoal.Kill obj in lQuest.questGoal.killGoal)
         {
             EnemyManager.instance.SetQuestEnemy(obj.enemy, obj.id);
-
         }
-
-
-
-        //   questGoal.Remove(lQuest.questGoal);
-        //questGiver.Remove(lquestGiver);
 
         if (lQuest.GetQuestStatus() == QuestStatus.turnedIn)
         {
 
-                    lquestGiver.RemoveQuest(lQuest);
-       // quest.Remove(lQuest);
+            lquestGiver.RemoveQuest(lQuest);
             if (onQuestTurnedIn != null)
                 onQuestTurnedIn.Invoke(lQuest);
         }
 
         if (lQuest.GetQuestStatus() == QuestStatus.abdoned)
-            if (OnQuestAbdoned != null)
-                OnQuestAbdoned();
+            if (onQuestAbdoned != null)
+                onQuestAbdoned.Invoke(lQuest);
 
         if (onQuestLogChanged != null)
             onQuestLogChanged.Invoke(lQuest);
@@ -127,8 +125,6 @@ public class QuestManager : MonoBehaviour
 
         Debug.Log("Quest Completed go back to QuestGiver");
     }
-
-
 
     private class QuestGiversQuests
     {

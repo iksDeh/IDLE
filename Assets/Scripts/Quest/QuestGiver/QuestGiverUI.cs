@@ -8,7 +8,7 @@ public class QuestGiverUI : MonoBehaviour
 {
    // public delegate void OnInteract(QuestGiverUI qgui);
    // OnInteract onInteract;
-
+   
     public QuestGiverWindow questGiverWindow;
     public SpriteRenderer questStatus;
 

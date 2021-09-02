@@ -4,7 +4,7 @@ using System.Collections;
 
 [CustomPropertyDrawer(typeof(CraftingLayout))]
 public class CustPropertyDrawer : PropertyDrawer {
-
+	
 	
 	public override void OnGUI(Rect position,SerializedProperty property,GUIContent label){
 		EditorGUI.PrefixLabel(position,label);
