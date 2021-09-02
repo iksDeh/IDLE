@@ -16,7 +16,7 @@ MonoBehaviour:
   description: dfgdfdfgdfgdfg
   questGoal:
     killGoal:
-    - enemy: {fileID: 0}
+    - enemy: {fileID: 5635126258983007219, guid: d88cc8f03b1a49540bf5737466f3091d, type: 3}
       reqiredAmount: 0
       currenAmount: 0
       id: 0
@@ -42,3 +42,5 @@ MonoBehaviour:
     lvlRequired: 34
     questReqiured: []
     itemRequired: []
+  questStatusIcon: {fileID: 21300000, guid: 4476b3b2ff8dc0e4a84d8427a8714415, type: 3}
+  questGiver: {fileID: 0}
