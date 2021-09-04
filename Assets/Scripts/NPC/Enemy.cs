@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharackterStats))]
 public class Enemy : Interactable
 {
-    public List<LootTable> enemyLoot;
+    public List<ItemDropTable> enemyLoot;
     PlayerManager playermanager;
     CharackterStats myStats;
     //public int maxEnemy = 5;

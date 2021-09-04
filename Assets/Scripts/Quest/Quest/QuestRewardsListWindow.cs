@@ -22,7 +22,7 @@ public class QuestRewardsListWindow : MonoBehaviour
     {
         createdObjects = new List<GameObject>();
         int counter = 0;
-        foreach (QuestRewards.QuestItemReward i in q.questRewards.itemRewards)
+        foreach (ItemLootTable.AllItemsLootTable i in q.questRewards.itemRewards)
         {
 
             GameObject image = new GameObject(i.item.name);
@@ -56,7 +56,7 @@ public class QuestRewardsListWindow : MonoBehaviour
         }
         if (q.questRewards.currencyRewards != null)
         {
-            if (q.questRewards.currencyRewards.copper > 0)
+          //  if (q.questRewards.currencyRewards.copper > 0)
             {
 
 
@@ -70,7 +70,7 @@ public class QuestRewardsListWindow : MonoBehaviour
                 glg.cellSize = this.GetComponent<GridLayoutGroup>().cellSize;
 
                 Image img = image.AddComponent<Image>();
-                img.sprite = Inventory.instance.currency.imageCopper;
+              //  img.sprite = Inventory.instance.currency.imageCopper;
 
                 GameObject amount = new GameObject("CopperAmount");
                 Instantiate(amount, new Vector3(0, 0, 0), Quaternion.identity);
@@ -79,7 +79,7 @@ public class QuestRewardsListWindow : MonoBehaviour
                 amount.layer = LayerMask.NameToLayer("UI");
 
                 TextMeshProUGUI amo = amount.AddComponent<TextMeshProUGUI>();
-                amo.text = q.questRewards.currencyRewards.copper.ToString();
+             //   amo.text = q.questRewards.currencyRewards.copper.ToString();
                 amo.fontSize = 4;
                 amo.fontSharedMaterial = font;
                 amo.alignment = TextAlignmentOptions.BottomRight;
@@ -96,7 +96,7 @@ public class QuestRewardsListWindow : MonoBehaviour
 
         if (q.questRewards.currencyRewards != null)
         {
-            if(q.questRewards.currencyRewards.copper > 0)
+         //   if(q.questRewards.currencyRewards.copper > 0)
             {
                 
 
@@ -107,7 +107,7 @@ public class QuestRewardsListWindow : MonoBehaviour
                 image.layer = LayerMask.NameToLayer("UI");
 
                 Image img = image.AddComponent<Image>();
-                img.sprite = Inventory.instance.currency.imageCopper;
+          //      img.sprite = Inventory.instance.currency.imageCopper;
 
                 GameObject amount = new GameObject("CopperAmount");
                 Instantiate(amount, new Vector3(0, 0, 0), Quaternion.identity);
@@ -116,7 +116,7 @@ public class QuestRewardsListWindow : MonoBehaviour
                 amount.layer = LayerMask.NameToLayer("UI");
 
                 TextMeshProUGUI amo = amount.AddComponent<TextMeshProUGUI>();
-                amo.text = q.questRewards.currencyRewards.copper.ToString();
+            //    amo.text = q.questRewards.currencyRewards.copper.ToString();
                 amo.fontSize = 4;
                 amo.fontSharedMaterial = font;
 

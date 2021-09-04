@@ -137,7 +137,7 @@ public class QuestManager : MonoBehaviour
         lQuest.questStatusIcon = null;
 
         Inventory.instance.Add(lQuest.questRewards.itemRewards);
-        Inventory.instance.AddMoney(lQuest.questRewards.currencyRewards);
+       // Inventory.instance.AddMoney(lQuest.questRewards.currencyRewards);
 
         if (onQuestTurnedIn != null)
             onQuestTurnedIn.Invoke(lQuest);

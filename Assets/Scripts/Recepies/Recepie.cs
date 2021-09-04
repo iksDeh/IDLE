@@ -23,14 +23,14 @@ public class CraftingLayout
 public class Recepie : Item
 {
 
-    public string name = "New Recepie";
+    new string name = "New Recepie";
     public bool isLearned { get; private set; } = false;
     public CraftingLayout craftingData = new CraftingLayout();
     
     public Item craftedItem;
 
     public Dictionary<Item, int> materialAmount = new Dictionary<Item, int>();
-    public bool isDefaultItem = false;
+  //  public bool isDefaultItem = false;
 
 
 
