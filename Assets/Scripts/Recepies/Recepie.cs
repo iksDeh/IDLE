@@ -20,7 +20,7 @@ public class CraftingLayout
 
 
 [CreateAssetMenu(fileName = "New Recepie", menuName = "Inventory/Recepie")]
-public class Recepie : ScriptableObject
+public class Recepie : Item
 {
 
     public string name = "New Recepie";
