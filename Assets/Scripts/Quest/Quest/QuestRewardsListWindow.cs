@@ -22,10 +22,10 @@ public class QuestRewardsListWindow : MonoBehaviour
     {
         createdObjects = new List<GameObject>();
         int counter = 0;
-        foreach (ItemLootTable.AllItemsLootTable i in q.questRewards.itemRewards)
+        foreach (Item i in q.questRewards.items.Keys)
         {
 
-            GameObject image = new GameObject(i.item.name);
+            GameObject image = new GameObject(i.name);
             Instantiate(image, new Vector3(0, 0, 0), Quaternion.identity);
             image.transform.SetParent(this.transform);
             image.transform.localScale = new Vector3(1, 1, 1);
@@ -35,16 +35,16 @@ public class QuestRewardsListWindow : MonoBehaviour
             glg.cellSize = this.GetComponent<GridLayoutGroup>().cellSize;
 
             Image img = image.AddComponent<Image>();
-            img.sprite = i.item.icon;
+            img.sprite = i.icon;
 
-            GameObject amount = new GameObject(i.item.name);
+            GameObject amount = new GameObject(i.name);
             Instantiate(amount, new Vector3(0, 0, 0), Quaternion.identity);
             amount.transform.SetParent(image.transform);
             amount.transform.localScale = new Vector3(1, 1, 1);
             amount.layer = LayerMask.NameToLayer("UI");
 
             TextMeshProUGUI amo = amount.AddComponent<TextMeshProUGUI>();
-            amo.text = i.amount.ToString();
+            amo.text = q.questRewards.items[i].ToString();
             amo.fontSize = 4;
             amo.fontSharedMaterial = font;
             amo.alignment = TextAlignmentOptions.BottomRight;
@@ -54,76 +54,76 @@ public class QuestRewardsListWindow : MonoBehaviour
 
             counter++;
         }
-        if (q.questRewards.currencyRewards != null)
-        {
-          //  if (q.questRewards.currencyRewards.copper > 0)
-            {
+        //if (q.questRewards.currencyRewards != null)
+        //{
+        //  //  if (q.questRewards.currencyRewards.copper > 0)
+        //    {
 
 
-                GameObject image = new GameObject("CopperIMG");
-                Instantiate(image, new Vector3(0, 0, 0), Quaternion.identity);
-                image.transform.SetParent(this.transform);
-                image.transform.localScale = new Vector3(1, 1, 1);
-                image.layer = LayerMask.NameToLayer("UI");
+        //        GameObject image = new GameObject("CopperIMG");
+        //        Instantiate(image, new Vector3(0, 0, 0), Quaternion.identity);
+        //        image.transform.SetParent(this.transform);
+        //        image.transform.localScale = new Vector3(1, 1, 1);
+        //        image.layer = LayerMask.NameToLayer("UI");
 
-                GridLayoutGroup glg = image.AddComponent<GridLayoutGroup>();
-                glg.cellSize = this.GetComponent<GridLayoutGroup>().cellSize;
+        //        GridLayoutGroup glg = image.AddComponent<GridLayoutGroup>();
+        //        glg.cellSize = this.GetComponent<GridLayoutGroup>().cellSize;
 
-                Image img = image.AddComponent<Image>();
-              //  img.sprite = Inventory.instance.currency.imageCopper;
+        //        Image img = image.AddComponent<Image>();
+        //      //  img.sprite = Inventory.instance.currency.imageCopper;
 
-                GameObject amount = new GameObject("CopperAmount");
-                Instantiate(amount, new Vector3(0, 0, 0), Quaternion.identity);
-                amount.transform.SetParent(image.transform);
-                amount.transform.localScale = new Vector3(1, 1, 1);
-                amount.layer = LayerMask.NameToLayer("UI");
+        //        GameObject amount = new GameObject("CopperAmount");
+        //        Instantiate(amount, new Vector3(0, 0, 0), Quaternion.identity);
+        //        amount.transform.SetParent(image.transform);
+        //        amount.transform.localScale = new Vector3(1, 1, 1);
+        //        amount.layer = LayerMask.NameToLayer("UI");
 
-                TextMeshProUGUI amo = amount.AddComponent<TextMeshProUGUI>();
-             //   amo.text = q.questRewards.currencyRewards.copper.ToString();
-                amo.fontSize = 4;
-                amo.fontSharedMaterial = font;
-                amo.alignment = TextAlignmentOptions.BottomRight;
+        //        TextMeshProUGUI amo = amount.AddComponent<TextMeshProUGUI>();
+        //     //   amo.text = q.questRewards.currencyRewards.copper.ToString();
+        //        amo.fontSize = 4;
+        //        amo.fontSharedMaterial = font;
+        //        amo.alignment = TextAlignmentOptions.BottomRight;
 
-                createdObjects.Add(image);
-                createdObjects.Add(amount);
-            }
-        }
+        //        createdObjects.Add(image);
+        //        createdObjects.Add(amount);
+        //    }
+        //}
     }
 
     public void SetCurrency(Quest q)
     {
         //Currency HINZUFÜGEN
 
-        if (q.questRewards.currencyRewards != null)
-        {
-         //   if(q.questRewards.currencyRewards.copper > 0)
-            {
+        //if (q.questRewards.currencyRewards != null)
+        //{
+        // //   if(q.questRewards.currencyRewards.copper > 0)
+        //    {
                 
 
-                GameObject image = new GameObject("CopperIMG");
-                Instantiate(image, new Vector3(0, 0, 0), Quaternion.identity);
-                image.transform.SetParent(this.transform);
-                image.transform.localScale = new Vector3(1, 1, 1);
-                image.layer = LayerMask.NameToLayer("UI");
+        //        GameObject image = new GameObject("CopperIMG");
+        //        Instantiate(image, new Vector3(0, 0, 0), Quaternion.identity);
+        //        image.transform.SetParent(this.transform);
+        //        image.transform.localScale = new Vector3(1, 1, 1);
+        //        image.layer = LayerMask.NameToLayer("UI");
 
-                Image img = image.AddComponent<Image>();
-          //      img.sprite = Inventory.instance.currency.imageCopper;
+        //        Image img = image.AddComponent<Image>();
+        //  //      img.sprite = Inventory.instance.currency.imageCopper;
 
-                GameObject amount = new GameObject("CopperAmount");
-                Instantiate(amount, new Vector3(0, 0, 0), Quaternion.identity);
-                amount.transform.SetParent(this.transform);
-                amount.transform.localScale = new Vector3(1, 1, 1);
-                amount.layer = LayerMask.NameToLayer("UI");
+        //        GameObject amount = new GameObject("CopperAmount");
+        //        Instantiate(amount, new Vector3(0, 0, 0), Quaternion.identity);
+        //        amount.transform.SetParent(this.transform);
+        //        amount.transform.localScale = new Vector3(1, 1, 1);
+        //        amount.layer = LayerMask.NameToLayer("UI");
 
-                TextMeshProUGUI amo = amount.AddComponent<TextMeshProUGUI>();
-            //    amo.text = q.questRewards.currencyRewards.copper.ToString();
-                amo.fontSize = 4;
-                amo.fontSharedMaterial = font;
+        //        TextMeshProUGUI amo = amount.AddComponent<TextMeshProUGUI>();
+        //    //    amo.text = q.questRewards.currencyRewards.copper.ToString();
+        //        amo.fontSize = 4;
+        //        amo.fontSharedMaterial = font;
 
-                createdObjects.Add(image);
-                createdObjects.Add(amount);
-            }
-        }
+        //        createdObjects.Add(image);
+        //        createdObjects.Add(amount);
+        //    }
+        //}
     }
 
         

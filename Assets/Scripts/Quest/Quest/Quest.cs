@@ -23,9 +23,11 @@ public class Quest : ScriptableObject
     public string questName;
     public string description;
 
+    public QuestCondition questStartConditions;
     public QuestGoal questGoal;
     public ItemLootTable questRewards;
-    public QuestCondition questConditions;
+    public int xpReward = 0;
+
     [HideInInspector] public Sprite questStatusIcon;
     private QuestStatus questStatus;
     [HideInInspector] public QuestGiver questGiver;

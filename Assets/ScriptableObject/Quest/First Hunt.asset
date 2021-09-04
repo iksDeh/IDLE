@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: First Hunt
   description: 'Hunt some plepls ({Enemy}) '
+  questStartConditions:
+    lvlRequired: 0
+    questReqiured: []
+    itemRequired: []
   questGoal:
     killGoal:
     - enemy: {fileID: 5635126258983007219, guid: d88cc8f03b1a49540bf5737466f3091d, type: 3}
@@ -27,12 +31,13 @@ MonoBehaviour:
     gatherGoalIsReached: 1
     goalCompleted: 1
   questRewards:
-    xpReward: 0
-    currencyRewards: []
-    itemRewards: []
-  questConditions:
-    lvlRequired: 0
-    questReqiured: []
-    itemRequired: []
+    currency:
+    - currency: {fileID: 11400000, guid: fa343828726ec7a4c823cce866b8ebaf, type: 2}
+      amount: 20
+    equip: []
+    craftingMaterial:
+    - item: {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
+      amount: 3
+  xpReward: 19
   questStatusIcon: {fileID: 21300000, guid: 4476b3b2ff8dc0e4a84d8427a8714415, type: 3}
   questGiver: {fileID: 0}

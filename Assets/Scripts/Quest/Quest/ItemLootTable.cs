@@ -7,7 +7,7 @@ using UnityEditor;
 public class ItemLootTable
 {
     [System.Serializable]
-    public class AllItemsLootTable
+    public class CraftingMaterialLootTable
     {
         public Item item;
         public int amount;
@@ -27,9 +27,24 @@ public class ItemLootTable
         public int amount = 1;
     }
 
-    public int xpReward = 0;
-    public List<AllItemsLootTable> itemRewards;
-    public List<CurrencyLootTable> currencyRewards;
+    [HideInInspector] public  Dictionary<Item, int> items;
+    [SerializeField] private List<CurrencyLootTable> currency;
+    [SerializeField] private List<EquipmentLootTable> equip;
+    [SerializeField] private List<CraftingMaterialLootTable> craftingMaterial;
 
+
+    public void Init()
+    {
+        items = new Dictionary<Item, int>();
+        if (currency.Count > 0)
+            foreach (CurrencyLootTable item in currency)
+                items.Add(item.currency, item.amount);
+        if (equip.Count > 0)
+            foreach (EquipmentLootTable item in equip)
+                items.Add(item.equip, item.amount);
+        if (craftingMaterial.Count > 0)
+            foreach (CraftingMaterialLootTable item in craftingMaterial)
+                items.Add(item.item, item.amount);
+    }
 
 }

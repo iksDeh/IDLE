@@ -41,9 +41,9 @@ public class Inventory : MonoBehaviour
             wallet.Add(cur, 0);
     }
 
-    public bool AddMoney(Currency cur)
+    public bool AddMoney(Currency cur, int amount)
     {
-        wallet[cur] += cur.amount;
+        wallet[cur] += amount;
         if(wallet[cur] >= cur.maxCurrency)
         {
             wallet[cur] -= cur.maxCurrency;
@@ -57,12 +57,12 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public bool RemoveMoney(Currency cur)
+    public bool RemoveMoney(Currency cur, int amount)
     {
 
-        if (wallet[cur] - cur.amount >= 0)
+        if (wallet[cur] - amount >= 0)
         {
-            wallet[cur] -= cur.amount;
+            wallet[cur] -= amount;
             return true;
         }
         else
@@ -83,7 +83,7 @@ public class Inventory : MonoBehaviour
                         if (currency.hirachyID == i)
                         {
                             if (currency.hirachyID == cur.hirachyID)
-                                wallet[currency] += cur.maxCurrency - cur.amount;
+                                wallet[currency] += cur.maxCurrency - amount;
                             else if (currency.hirachyID == currencyID)
                                 wallet[currency] -= 1;
                             else
@@ -97,24 +97,38 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public bool Add(List<ItemLootTable.AllItemsLootTable> qItems)
+
+    public bool Add(Dictionary<Item,int> items)
     {
-        if(qItems != null)
+        if(items != null)
         {
-            foreach (ItemLootTable.AllItemsLootTable i in qItems)
+            foreach (Item i in items.Keys)
             {
-                if (itemList.ContainsKey(i.item))
-                    itemList[i.item] += i.amount;
+                if (i.GetType() == typeof(Currency)) // testen!!!!
+                {
+                    AddMoney((Currency)i, items[i]);
+                }
                 else
-                    itemList.Add(i.item, i.amount);
+                {
+                    if (itemList.Count >= space)
+                    {
+                        Debug.Log("Inventory is full");
+                        return false;
+                    }
+                    if (itemList.ContainsKey(i))
+                        itemList[i] += items[i];
+                    else
+                        itemList.Add(i, items[i]);
+                }
+
                 if (onItemChangedCallback != null)
-                    onItemChangedCallback.Invoke(i.item);
+                    onItemChangedCallback.Invoke(i);
             }
             return true;
         }
-        return false;
+        else
+            return false;
     }
-
     public bool Add(Item item, int amount)
     {
         if (!item.isDefaultItem)
@@ -179,24 +193,31 @@ public class Inventory : MonoBehaviour
         try
         {
             foreach (Item i in items.Keys)
-                if (itemList[i] - items[i] > 0)
+                if (i.GetType() == typeof(Currency)) // testen!!!!
                 {
-                    itemList[i] -= items[i];
-                    if (onItemChangedCallback != null)
-                        onItemChangedCallback.Invoke(i);
+                    RemoveMoney((Currency)i, items[i]);
                 }
-
-                else if (itemList[i] - items[i] == 0)
-                {
-                itemList.Remove(i);
-                if (onItemChangedCallback != null)
-                    onItemChangedCallback.Invoke(i);
-            }
-
                 else
                 {
-                    Debug.Log("Not enough Items to craft");
-                    return false;
+                    if (itemList[i] - items[i] > 0)
+                    {
+                        itemList[i] -= items[i];
+                        if (onItemChangedCallback != null)
+                            onItemChangedCallback.Invoke(i);
+                    }
+
+                    else if (itemList[i] - items[i] == 0)
+                    {
+                        itemList.Remove(i);
+                        if (onItemChangedCallback != null)
+                            onItemChangedCallback.Invoke(i);
+                    }
+
+                    else
+                    {
+                        Debug.Log("Not enough Items to craft");
+                        return false;
+                    }
                 }
 
             return true;
