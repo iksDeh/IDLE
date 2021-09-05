@@ -92,8 +92,13 @@ public class PlayerController : MonoBehaviour
 
     public void EnemyKilled(Enemy enemy)
     {
-            if (enemy != null)
+        if (enemy != null)
+        {
+            stats.OnKill(enemy);
+            Inventory.instance.Add(enemy.enemyLoot.GetItems());
             QuestManager.instance.UpdateQuest(enemy);
+        }
+
     }
 
     public void OnMove(InputAction.CallbackContext context)

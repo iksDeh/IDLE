@@ -51,10 +51,10 @@ public class Inventory : MonoBehaviour
                 if (currency.hirachyID == cur.hirachyID + 1)
                 {
                     wallet[currency] += 1;
-                    return true;
                 }
         }
-        return false;
+        Debug.Log(cur.name + " : " + wallet[cur]);
+        return true;
     }
 
     public bool RemoveMoney(Currency cur, int amount)
@@ -119,10 +119,10 @@ public class Inventory : MonoBehaviour
                         itemList[i] += items[i];
                     else
                         itemList.Add(i, items[i]);
-                }
 
-                if (onItemChangedCallback != null)
-                    onItemChangedCallback.Invoke(i);
+                    if (onItemChangedCallback != null)
+                        onItemChangedCallback.Invoke(i);
+                }
             }
             return true;
         }

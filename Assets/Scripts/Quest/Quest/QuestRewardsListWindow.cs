@@ -8,7 +8,7 @@ public class QuestRewardsListWindow : MonoBehaviour
 {
     public Material font;
     private List<GameObject> createdObjects;
-
+    private Dictionary<Item, int> questRewards;
     public void RemoveAllRewards()
     {
         if(createdObjects != null)
@@ -22,7 +22,8 @@ public class QuestRewardsListWindow : MonoBehaviour
     {
         createdObjects = new List<GameObject>();
         int counter = 0;
-        foreach (Item i in q.questRewards.items.Keys)
+        questRewards = q.questRewards.GetItems();
+        foreach (Item i in questRewards.Keys)
         {
 
             GameObject image = new GameObject(i.name);
@@ -44,7 +45,7 @@ public class QuestRewardsListWindow : MonoBehaviour
             amount.layer = LayerMask.NameToLayer("UI");
 
             TextMeshProUGUI amo = amount.AddComponent<TextMeshProUGUI>();
-            amo.text = q.questRewards.items[i].ToString();
+            amo.text = questRewards[i].ToString();
             amo.fontSize = 4;
             amo.fontSharedMaterial = font;
             amo.alignment = TextAlignmentOptions.BottomRight;

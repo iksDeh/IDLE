@@ -67,7 +67,10 @@ public class SpawnAreas : MonoBehaviour
     }
     public int GetEnmyCountInArea()
     {
-        return enemys.Count;
+        int counter = 0;
+        foreach (Enemy e in GetComponentsInChildren<Enemy>())
+            counter++;
+        return counter;
     }
 
 }

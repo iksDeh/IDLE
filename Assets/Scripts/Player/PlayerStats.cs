@@ -47,15 +47,16 @@ public class PlayerStats : CharackterStats
         }
     }
 
-    public void OnKill(EnemyStats enemy)
+    public void OnKill(Enemy enemy)
     {
-        
-        xpCurrent += Mathf.Sqrt((enemy.level.GetValue() * lvlUpXpMultiplier));
+        xpCurrent += Mathf.Sqrt((enemy.myStats.level.GetValue() * lvlUpXpMultiplier));
         if (xpCurrent >= xpNeeded)
         {
             level.AddModifier(1);
             xpNeeded += Mathf.Sqrt((level.GetValue() * lvlUpXpNeededMultiplier));
         }
+        Debug.Log(xpCurrent + " CurrentXP" +xpNeeded+ " NeededXP on Level " + level.GetValue().ToString());
+            
     }
 
     public override void Die()

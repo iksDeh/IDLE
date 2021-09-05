@@ -5,9 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(CharackterStats))]
 public class Enemy : Interactable
 {
-    public List<ItemDropTable> enemyLoot;
+    public LootTable enemyLoot;
     PlayerManager playermanager;
-    CharackterStats myStats;
+    public CharackterStats myStats;
     //public int maxEnemy = 5;
     [HideInInspector] public bool isActiveQuestMob { get; set; }
      public List<int> questIDs;

@@ -22,22 +22,26 @@ MonoBehaviour:
     killGoal:
     - enemy: {fileID: 5635126258983007219, guid: d88cc8f03b1a49540bf5737466f3091d, type: 3}
       reqiredAmount: 3
-      currenAmount: 3
-      id: 1
+      currenAmount: 0
+      id: 0
     lootGoal: []
     gatherGoal: []
-    killGoalIsReached: 1
-    lootGoalIsReached: 1
-    gatherGoalIsReached: 1
-    goalCompleted: 1
+    killGoalIsReached: 0
+    lootGoalIsReached: 0
+    gatherGoalIsReached: 0
+    goalCompleted: 0
   questRewards:
     currency:
     - currency: {fileID: 11400000, guid: fa343828726ec7a4c823cce866b8ebaf, type: 2}
-      amount: 20
+      dropChance: 100
+      minDropAmount: 10
+      maxDropAmount: 10
     equip: []
     craftingMaterial:
     - item: {fileID: 11400000, guid: 452f751add3a65d498de6c2fa02541f0, type: 2}
-      amount: 3
+      dropChance: 100
+      minDropAmount: 10
+      maxDropAmount: 10
   xpReward: 19
   questStatusIcon: {fileID: 21300000, guid: 4476b3b2ff8dc0e4a84d8427a8714415, type: 3}
   questGiver: {fileID: 0}

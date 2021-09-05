@@ -79,12 +79,14 @@ public class EnemyManager : MonoBehaviour
 
     IEnumerator SpawnEnemy(float delay)
     {
-        yield return new WaitForSeconds(delay);
-        foreach (SpawnAreas area in spawnAreas.GetComponentsInChildren<SpawnAreas>())
+        while (true)
         {
-                for(id = area.GetEnmyCountInArea(); id <= area.enemyAmountInArea; id++ )
-                    foreach(Enemy enemy in  area.enemyTyp)
-                        if(area.GetEnmyCountInArea() <= area.enemyAmountInArea)
+            yield return new WaitForSeconds(delay);
+            foreach (SpawnAreas area in spawnAreas.GetComponentsInChildren<SpawnAreas>())
+            {
+                for (id = area.GetEnmyCountInArea(); id <= area.enemyAmountInArea; id++)
+                    foreach (Enemy enemy in area.enemyTyp)
+                        if (area.GetEnmyCountInArea() <= area.enemyAmountInArea)
                         {
                             GameObject newObj;
                             Enemy e;
@@ -99,6 +101,7 @@ public class EnemyManager : MonoBehaviour
                             area.AddEnemy(e);
                             AddEnemy(e);
                         }
+            }
         }
     }
 }

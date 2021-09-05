@@ -9,7 +9,7 @@ public class EnemyStats : CharackterStats
     {
         base.Die();
 
-        PlayerController.instance.EnemyKilled(this.GetComponent<Enemy>()); ;
+        PlayerController.instance.EnemyKilled(this.GetComponent<Enemy>()); 
         EnemyManager.instance.RemoveEnemy(this.GetComponent<Enemy>());
         Destroy(gameObject);
     }
