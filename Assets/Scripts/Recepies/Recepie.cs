@@ -23,7 +23,7 @@ public class CraftingLayout
 public class Recepie : Item
 {
 
-    new string name = "New Recepie";
+
     public bool isLearned { get; private set; } = false;
     public CraftingLayout craftingData = new CraftingLayout();
     

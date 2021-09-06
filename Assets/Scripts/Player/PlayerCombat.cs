@@ -14,7 +14,7 @@ public class PlayerCombat : Combat
         if (autoAttack > 0)
         {
             base.Attack(targetStats);
-            Debug.Log("Target got hit with: " + myStats.damage.GetValue());
+            Debug.Log("Target got hit with: " + myStats.stats.damage.GetValue());
         }
     }
 

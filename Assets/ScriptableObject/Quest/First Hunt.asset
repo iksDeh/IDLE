@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: First Hunt
   m_EditorClassIdentifier: 
   questName: First Hunt
-  description: 'Hunt some plepls ({Enemy}) '
+  description: Hunt some plepls ({Enemy})  asd asd  asd asd assd asd asd asd  aksjdh
+    asd aouwdh aosdh aosd oasdh oasdh oashd asohd oasdh asodh oashd oasdh oashd oashd
+    oasdh oashd oasdh oashd oashdoashd oasdh oahd oasdh asodhasdoh asodhasodh aosdh
+    asdoh asodh aosdh aodhaosdh aoshd oashdaoshd oashdoash doahsdoaishd oasd
   questStartConditions:
     lvlRequired: 0
     questReqiured: []

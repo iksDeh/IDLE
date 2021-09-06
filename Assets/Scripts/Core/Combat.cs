@@ -34,7 +34,7 @@ public class Combat : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        stats.TakeDamage(myStats.damage.GetValue());
+        stats.TakeDamage(myStats.stats.damage.GetValue());
     }
 
     void Update()

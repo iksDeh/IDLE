@@ -5,8 +5,9 @@ using UnityEngine;
 public class QuestGiverWindow : MonoBehaviour
 {
     public GameObject questTransform;
-    
     public Transform questParent;
+
+
 
     //private List<GameObject> quests;
     private Dictionary<Quest, GameObject> quests;

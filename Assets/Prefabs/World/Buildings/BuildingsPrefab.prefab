@@ -3530,7 +3530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5643891562374491395
 Transform:
   m_ObjectHideFlags: 0
@@ -4655,22 +4655,12 @@ MonoBehaviour:
   weight: 1
   DrawCollisionArea: 1
   quest:
-    title: 
-    description: 
-    xpReward: 0
-    goldReward: 0
-    itemReward: []
-    questGoal:
-      goalType: 0
-      reqiredAmount: 2
-      currenAmount: 0
-      enemyQuestList:
-      - {fileID: 0}
-  questWindow: {fileID: 0}
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  xpText: {fileID: 0}
-  goldText: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &5643891562796468522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4683,8 +4673,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fc3647b2f38104eae580348c03e45d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questGiverWindow: {fileID: 0}
+  questStatus: {fileID: 0}
   questGiver: {fileID: 5643891562796468523}
-  questIcons: {fileID: 5643891562724702920}
 --- !u!210 &5643891562796468521
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -9880,7 +9871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5643891563633793661
 Transform:
   m_ObjectHideFlags: 0

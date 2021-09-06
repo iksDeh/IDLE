@@ -12,12 +12,15 @@ public class QuestWindow : MonoBehaviour
     public Button buttonAccept;
     public Button buttonComplete;
 
+
+
     private Quest q;
     private QuestGiver qg;
 
     void Start()
     {
         QuestManager.instance.onQuestLogChanged += UpdateUI;
+
     }
 
     public void UpdateUI(Quest quest)

@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PlayerStats : CharackterStats
 {
-    public int lvlUpXpMultiplier = 10;
-    public int lvlUpXpNeededMultiplier = 100;
-
-    public int stamminaHealthMultipli = 10;
 
 
     double xpNeeded = 0;
@@ -15,47 +11,50 @@ public class PlayerStats : CharackterStats
     void Start()
     {
         EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
-        xpNeeded = level.GetValue() * lvlUpXpNeededMultiplier;
+        xpNeeded = stats.level.GetValue() * stats.level.lvlUpXpNeededMultiplier;
+        
     }
-
+    
     void OnEquipmentChanged(Equipment newItem, Equipment oldItem)
     {
         if(newItem != null)
         {
-            armor.AddModifier(newItem.armor);
-            damage.AddModifier(newItem.damage);
-            agility.AddModifier(newItem.agility);
-            strength.AddModifier(newItem.strength);
-            stammina.AddModifier(newItem.stammina);
-            spirit.AddModifier(newItem.spirit);
-            inttiligenz.AddModifier(newItem.intiligenz);
+            //armor.AddModifier(newItem.armor);
+            //damage.AddModifier(newItem.damage);
+            //agility.AddModifier(newItem.agility);
+            //strength.AddModifier(newItem.strength);
+            //stammina.AddModifier(newItem.stammina);
+            //spirit.AddModifier(newItem.spirit);
+            //inttiligenz.AddModifier(newItem.intiligenz);
 
-            SetHealth(stamminaHealthMultipli * stammina.GetValue());
+           // SetHealth(stamminaHealthMultipli * stammina.GetValue());
         }
         if(oldItem != null)
         {
-            SetHealth((stamminaHealthMultipli * stammina.GetValue()) * -1);
+           // SetHealth((stamminaHealthMultipli * stammina.GetValue()) * -1);
 
-            armor.RemoveModifier(oldItem.armor);
-            damage.RemoveModifier(oldItem.damage);
-            agility.RemoveModifier(oldItem.agility);
-            strength.RemoveModifier(oldItem.strength);
-            stammina.RemoveModifier(oldItem.stammina);
-            spirit.RemoveModifier(oldItem.spirit);
-            inttiligenz.RemoveModifier(oldItem.intiligenz);
+            //armor.RemoveModifier(oldItem.armor);
+            //damage.RemoveModifier(oldItem.damage);
+            //agility.RemoveModifier(oldItem.agility);
+            //strength.RemoveModifier(oldItem.strength);
+            //stammina.RemoveModifier(oldItem.stammina);
+            //spirit.RemoveModifier(oldItem.spirit);
+            //inttiligenz.RemoveModifier(oldItem.intiligenz);
 
         }
     }
-
+    
     public void OnKill(Enemy enemy)
     {
-        xpCurrent += Mathf.Sqrt((enemy.myStats.level.GetValue() * lvlUpXpMultiplier));
+       xpCurrent += Mathf.Sqrt((enemy.myStats.stats.level.GetValue() * stats.level.lvlUpXpMultiplier));
         if (xpCurrent >= xpNeeded)
         {
-            level.AddModifier(1);
-            xpNeeded += Mathf.Sqrt((level.GetValue() * lvlUpXpNeededMultiplier));
+            stats.level.AddModifier(1);
+            if (onLevelUp != null)
+                onLevelUp.Invoke();
+            xpNeeded += Mathf.Sqrt((stats.level.GetValue() * stats.level.lvlUpXpNeededMultiplier));
         }
-        Debug.Log(xpCurrent + " CurrentXP" +xpNeeded+ " NeededXP on Level " + level.GetValue().ToString());
+        Debug.Log(xpCurrent + " CurrentXP" +xpNeeded+ " NeededXP on Level " + stats.level.GetValue().ToString());
             
     }
 
