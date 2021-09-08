@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
 
 
+    public ParticleSystem part;
 
     public GameObject player;
     public Camera cam;
@@ -130,6 +131,12 @@ public class PlayerController : MonoBehaviour
         inveontoryUI = context.ReadValue<float>();
         Debug.Log("Hallo");
     }
+    public void OnSpell1(InputAction.CallbackContext context)
+    {
+        part.transform.position = player.transform.position;
+        part.transform.rotation = player.transform.rotation;
+        part.Play();
+    }
 
     public void MousePosition(InputAction.CallbackContext context)
     {
@@ -151,6 +158,8 @@ public class PlayerController : MonoBehaviour
         else
             return false;
     }
+
+
 
     public bool GetInteract()
     {
