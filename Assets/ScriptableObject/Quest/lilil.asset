@@ -17,7 +17,8 @@ MonoBehaviour:
   isDefaultItem: 0
   craftingData:
     rows:
-    - row: []
+    - row:
+      - {fileID: 0}
     - row: []
     - row: []
     - row: []

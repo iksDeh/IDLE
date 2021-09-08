@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fd6bbec1e77524f91a95f781fa18f3, type: 3}
   m_Name: Neue Quest
   m_EditorClassIdentifier: 
-  questName: 
-  description: 
+  questName: Jagen
+  description: 'asdasd asd asd '
   questStartConditions:
     lvlRequired: 0
     questReqiured: []
@@ -27,7 +27,11 @@ MonoBehaviour:
     gatherGoalIsReached: 0
     goalCompleted: 0
   questRewards:
-    currency: []
+    currency:
+    - currency: {fileID: 11400000, guid: fa343828726ec7a4c823cce866b8ebaf, type: 2}
+      dropChance: 100
+      minDropAmount: 0
+      maxDropAmount: 0
     equip: []
     craftingMaterial: []
   xpReward: 0
