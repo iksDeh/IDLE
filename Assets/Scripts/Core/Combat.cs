@@ -17,7 +17,7 @@ public class Combat : MonoBehaviour
         myStats = GetComponent<CharackterStats>();
     }
 
-    public virtual void Attack(CharackterStats targetStats)
+    public virtual bool Attack(CharackterStats targetStats)
     {
             if(attackCooldown <= 0f)
         {
@@ -27,7 +27,9 @@ public class Combat : MonoBehaviour
                 OnAttack();
 
             attackCooldown = 1f / attackSpeed;
+            return true;
         }
+        return false;
     }
 
     IEnumerator DoDamage(CharackterStats stats, float delay)

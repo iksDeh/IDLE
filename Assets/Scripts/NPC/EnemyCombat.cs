@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyCombat : Combat
 {
-    public override void Attack(CharackterStats targetStats)
+    public override bool Attack(CharackterStats targetStats)
     {
-        base.Attack(targetStats);
+       return base.Attack(targetStats);
     }
 }

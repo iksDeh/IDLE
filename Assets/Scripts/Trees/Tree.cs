@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Tree : Interactable
 {
+    public ParticleSystem part;
     public SortOfWood sortOfWood;
     public int dropAmountMin = 1;
     public int dropAmountMay = 3;
@@ -23,7 +24,14 @@ public class Tree : Interactable
 
         PlayerCombat playerCombat = playermanager.player.GetComponent<PlayerCombat>();
         if (playerCombat != null)
-            playerCombat.Attack(myStats);
+        {
+
+                if(playerCombat.Attack(myStats))
+                    part.Play();
+            
+
+        }
+
     }
 }
 

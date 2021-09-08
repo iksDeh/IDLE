@@ -9,13 +9,14 @@ public class PlayerCombat : Combat
 
     private float autoAttack;
 
-    public override void Attack(CharackterStats targetStats)
+    public override bool Attack(CharackterStats targetStats)
     {
         if (autoAttack > 0)
         {
-            base.Attack(targetStats);
             Debug.Log("Target got hit with: " + myStats.stats.damage.GetValue());
+            return base.Attack(targetStats);
         }
+        return false;
     }
 
     public void OnAutoAttack(InputAction.CallbackContext context)
