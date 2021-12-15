@@ -129,7 +129,7 @@ public class Inventory : MonoBehaviour
         else
             return false;
     }
-    public bool Add(Item item, int amount)
+    public bool Add(Item item, int amount = 1)
     {
         if (!item.isDefaultItem)
         {
@@ -151,27 +151,27 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public bool Add(Item item)
-    {
-        if(!item.isDefaultItem)
-        {
-            if(itemList.Count >= space)
-            {
-                Debug.Log("Inventory is full");
-                return false;
-            }
-            if (itemList.ContainsKey(item))
-                itemList[item]++;
-            else
-                itemList.Add(item, 1);
+    //public bool Add(Item item)
+    //{
+    //    if(!item.isDefaultItem)
+    //    {
+    //        if(itemList.Count >= space)
+    //        {
+    //            Debug.Log("Inventory is full");
+    //            return false;
+    //        }
+    //        if (itemList.ContainsKey(item))
+    //            itemList[item]++;
+    //        else
+    //            itemList.Add(item, 1);
 
 
 
-            if (onItemChangedCallback != null)
-                onItemChangedCallback.Invoke(item);
-        }
-        return true;
-    }
+    //        if (onItemChangedCallback != null)
+    //            onItemChangedCallback.Invoke(item);
+    //    }
+    //    return true;
+    //}
     public int GetItemAmount(Item item)
     {
         int i = 0;
@@ -229,7 +229,7 @@ public class Inventory : MonoBehaviour
 
 
     }
-    public void Remove(Item item, int amount)
+    public void Remove(Item item, int amount = 1)
     {
         for(int i = 0;  i < amount; i++)
         {
@@ -242,14 +242,14 @@ public class Inventory : MonoBehaviour
             onItemChangedCallback.Invoke(item);
     }
 
-    public void Remove(Item item)
-    {
-        if (itemList[item] > 1)
-            itemList[item]--;
-        else
-            itemList.Remove(item);
+    //public void Remove(Item item)
+    //{
+    //    if (itemList[item] > 1)
+    //        itemList[item]--;
+    //    else
+    //        itemList.Remove(item);
 
-        if (onItemChangedCallback != null)
-            onItemChangedCallback.Invoke(item);
-    }
+    //    if (onItemChangedCallback != null)
+    //        onItemChangedCallback.Invoke(item);
+    //}
 }
